@@ -1,19 +1,36 @@
 import { Request, Response } from 'express';
-import Documentaion from '../models/documentationModel';
+import Documentation from '../models/documentationModel';
+import { connect, disconnect } from '../databases/db';
+
 
 const getDocumentation = async (req: Request, res: Response) => {
-  try {
-    const users = await Documentaion.find();
-    res.json(users);
-  } catch (error) {
-    let errorMsg = 'An unknown error occurred'
-    if (error instanceof Error)
-    {
-      errorMsg = error.message;
-    }
-      
-    res.status(500).json({ error: errorMsg });
-  }
+  Documentation.find({})
+  .then(docs => {
+    return res.status(200).send(docs);
+  })
+  .catch(err => {
+    console.error('Error finding documents:', err);
+    return res.status(500).send("Internal Server Error");
+  });
 };
 
-export default { getDocumentation };
+export const postDocumentation = async (req: Request, res: Response) => {
+  console.log("req " + req.body);
+
+  const newDoc = new Documentation({
+    title: req.body.title,
+    user_name: req.body.user_name,
+    description: req.body.description,
+  });
+
+  newDoc.save()
+  .then(doc => {
+    return res.status(200).send(doc);
+  })
+  .catch(err => {
+    return res.status(400).send("Bad Request");
+  });
+
+}
+
+export default { getDocumentation, postDocumentation };
