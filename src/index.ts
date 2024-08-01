@@ -3,9 +3,11 @@ import mongoose from 'mongoose';
 import documentationRoutes from './routes/documentationRoutes';
 import logger from './middleware/logger';
 
-
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
+
+// MongoDB connection settings
+const mongoURI = 'mongodb://localhost:27017/myproject';
 
 // Middleware
 app.use(logger);
@@ -14,14 +16,16 @@ app.use(express.json());
 // Routes
 app.use('/api', documentationRoutes);
 
-// Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/mydatabase')
-  .then(() => {
-    console.log('Connected to MongoDB');
-    app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
-    });
-  })
-  .catch(err => {
-    console.error('Error connecting to MongoDB', err);
+// Connect to MongoDB using Mongoose
+mongoose.connect(mongoURI, {})
+.then(() => {
+  console.log('Connected to MongoDB');
+
+  // Start the Express server once connected to MongoDB
+  app.listen(PORT, () => {
+    console.log(`Server running at http://localhost:${PORT}/`);
   });
+})
+.catch((error) => {
+  console.error('Error connecting to MongoDB:', error);
+});
