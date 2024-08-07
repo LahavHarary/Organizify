@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import Documentation from '../models/documentationModel';
-import { connect, disconnect } from '../databases/db';
+import generateDocumentation from '../services/gptService'
 
 
 const getDocumentation = async (req: Request, res: Response) => {
@@ -15,12 +15,10 @@ const getDocumentation = async (req: Request, res: Response) => {
 };
 
 export const postDocumentation = async (req: Request, res: Response) => {
-  console.log("req " + req.body);
-
   const newDoc = new Documentation({
     title: req.body.title,
     user_name: req.body.user_name,
-    description: req.body.description,
+    description: generateDocumentation(req.body.description),
   });
 
   newDoc.save()
