@@ -15,19 +15,14 @@ const getDocumentation = async (req: Request, res: Response) => {
 };
 
 export const postDocumentation = async (req: Request, res: Response) => {
-  const newDoc = new Documentation({
+  
+  const newDoc = await Documentation.create({
     title: req.body.title,
     user_name: req.body.user_name,
     description: generateDocumentation(req.body.description),
-  });
-
-  newDoc.save()
-  .then(doc => {
-    return res.status(200).send(doc);
   })
-  .catch(err => {
-    return res.status(400).send("Bad Request");
-  });
+  .then(doc => {return res.status(200).send(doc);})
+  .catch(err => {return res.status(400).send("Bad Request");});
 
 }
 
