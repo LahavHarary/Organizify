@@ -2,20 +2,12 @@ body{
   background-color: #242424;
 }
 
-.container{
-  
-}
-
 .flex-container{
   display: flex;
-  height: 100vh;
   flex-direction: column;
   justify-content: center;
   align-items: center; 
-}
-
-.container.clicked{
-  padding: 45vh; 
+  overflow:scroll;
 }
 
 .response-item {
@@ -34,12 +26,7 @@ body{
 }
 
 .doc-data{
-  visibility: hidden;
-}
-
-.doc-data.clicked{
   color: #0276FF;
-  visibility: visible;
 }
 
 .send-post-request-btn {
