@@ -14,9 +14,7 @@ const getDocumentations = async (req: Request, res: Response) => {
   });
 };
 
-const getDocumentation = async (req: Request, res: Response) => {
-  console.log("hello mf");
-  
+const getDocumentation = async (req: Request, res: Response) => {  
   Documentation.findById({_id:req.params.id})
   .then(docs => {
     return res.status(200).send(docs);
