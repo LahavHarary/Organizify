@@ -3,7 +3,9 @@ import documentaionController from '../controllers/documentationController';
 
 const router = Router();
 
-router.get('/documentations', documentaionController.getDocumentation);
+router.get('/documentations', documentaionController.getDocumentations);
+
+router.get('/documentation/:id', documentaionController.getDocumentation);
 
 router.post('/documentation', documentaionController.postDocumentation);
 
