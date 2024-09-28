@@ -122,3 +122,5 @@ dist
 
 # misc
 .DS_
+
+frontend/eslint.config.js
