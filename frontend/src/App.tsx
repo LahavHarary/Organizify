@@ -3,7 +3,6 @@ import { getDocumentationListData, getSingleDocumentationResponse, Documentation
 
 const App: React.FC = () => {
   // Doc list
-  const [isDocListClicked, setDocListIsClicked] = useState(false);
   const [docListResponse, setDocListResponse] = useState<DocumentationShortResponse[] | null>(null);
 
   // Single doc
@@ -17,7 +16,6 @@ const App: React.FC = () => {
       try {
         const result = await getDocumentationListData();
         setDocListResponse(result);
-        setDocListIsClicked(true);
       } catch (error) {
         setError((error as Error).message);
       }
@@ -32,7 +30,6 @@ const App: React.FC = () => {
       const result = await getSingleDocumentationResponse(id);
       setSingleDocResponse(result);
       setDocListResponse([]);
-      setDocListIsClicked(false);
     } catch (error) {
       setError((error as Error).message);
     }
@@ -40,9 +37,8 @@ const App: React.FC = () => {
 
   return (
     <>
-      <div className={`container ${isDocListClicked ? 'clicked' : ''}`}>
         <div className={"flex-container"}>
-          <h1 className={`doc-data ${isDocListClicked ? 'clicked' : ''}`}>Documentation List</h1>
+          <h1 className={`doc-data`}>Documentation List</h1>
           <div className="post-request">
             {docListResponse && (
               <div className="response-list">
@@ -68,7 +64,6 @@ const App: React.FC = () => {
             </div>
             )}
         </div>
-    </div>
     </>
   );
 };
