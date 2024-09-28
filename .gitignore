@@ -124,3 +124,5 @@ dist
 .DS_
 
 frontend/eslint.config.js
+
+script.bash
